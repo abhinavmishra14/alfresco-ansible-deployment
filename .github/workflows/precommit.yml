@@ -1,9 +1,9 @@
 name: pre-commit
-
 on:
   pull_request:
   push:
-
 jobs:
   pre-commit:
-    uses: Alfresco/alfresco-build-tools/.github/workflows/pre-commit.yml@OPSEXP-1357-pre-commit-gha
+    runs-on: ubuntu-latest
+    steps:
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
