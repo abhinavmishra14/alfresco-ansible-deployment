@@ -6,4 +6,4 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@master
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@OPSEXP-1358-pre-commit-action
