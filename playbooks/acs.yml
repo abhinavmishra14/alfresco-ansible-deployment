@@ -1,4 +1,7 @@
 ---
+- name: Include before playbook
+  import_playbook: before.yml
+
 - hosts: all:!external
   gather_facts: false
   tasks:
