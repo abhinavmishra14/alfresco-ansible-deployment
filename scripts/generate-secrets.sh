@@ -5,5 +5,5 @@ fi
 
 secret_keys=(repo_db_password sync_db_password reposearch_shared_secret)
 for secret_key in "${secret_keys[@]}"; do
-    ansible-vault encrypt_string "$(openssl rand -base64 21)" --name ${secret_key} | grep -v 'Encryption successful'
+    ansible-vault encrypt_string "$(openssl rand -base64 21)" --name "${secret_key}" | grep -v 'Encryption successful'
 done
