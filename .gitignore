@@ -3,6 +3,8 @@ configuration_files/ssl_certificates/
 configuration_files/keystores/
 dtas
 .env.credentials
+.vault_pass.txt
+vars/secrets.yml
 
 # # Byte-compiled / optimized / DLL files
 __pycache__/

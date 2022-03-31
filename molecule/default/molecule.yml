@@ -32,8 +32,6 @@ provisioner:
     - "@${MOLECULE_IT_EXTRA_VARS}"
     - -e
     - "@tests/test-ssl.yml"
-    - --vault-password-file
-    - "tests/vault_pass.txt"
   inventory:
     links: 
       group_vars: ../../group_vars

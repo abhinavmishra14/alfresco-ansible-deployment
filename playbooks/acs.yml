@@ -1,6 +1,18 @@
 ---
-- name: Include before playbook
-  import_playbook: before.yml
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: Include secrets file
+      include_vars:
+        file: ../vars/secrets.yml
+    - name: Ensure that all necessary secrets are set
+      assert:
+        that:
+          - repo_db_password is defined and repo_db_password | length > 0
+          - sync_db_password is defined and sync_db_password | length > 0
+          - reposearch_shared_secret is defined and reposearch_shared_secret | length > 0
+        msg: "Secrets must be provided in vars/secrets.yml before running the playbook"
+        quiet: true
 
 - hosts: all:!external
   gather_facts: false
