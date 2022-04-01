@@ -4,8 +4,7 @@ if [ -n "$MOLECULE_IT_SCENARIO" ]; then
     export ANSIBLE_VAULT_PASSWORD_FILE=./.vault_pass.txt
     if [ ! -f "$ANSIBLE_VAULT_PASSWORD_FILE" ]; then
         echo "Generating a random secret to encrypt in ansible-vault"
-        openssl rand -base64 21 > $ANSIBLE_VAULT_PASSWORD_FILE
-        cat $ANSIBLE_VAULT_PASSWORD_FILE
+        openssl rand -base64 33 >$ANSIBLE_VAULT_PASSWORD_FILE
     fi
 
     EXTRA_CONFIG=""
@@ -17,11 +16,15 @@ if [ -n "$MOLECULE_IT_SCENARIO" ]; then
         # shellcheck disable=SC2086
         molecule $EXTRA_CONFIG destroy -s "$MOLECULE_IT_SCENARIO"
     elif [ "$1" == 'verify' ]; then
-        echo "Generating ansible-vault secrets..."
-        ./scripts/generate-secrets.sh > vars/secrets.yml
-        cat vars/secrets.yml
         # shellcheck disable=SC2086
-        molecule $EXTRA_CONFIG converge -s "$MOLECULE_IT_SCENARIO" || exit 1
+        molecule $EXTRA_CONFIG converge -s "$MOLECULE_IT_SCENARIO"
+
+        SECRETS='vars/secrets.yml'
+        if [ ! -f "$SECRETS" ]; then
+            echo "$SECRETS should exists"
+            exit 1
+        fi
+
         # shellcheck disable=SC2086
         molecule $EXTRA_CONFIG verify -s "$MOLECULE_IT_SCENARIO"
     else
