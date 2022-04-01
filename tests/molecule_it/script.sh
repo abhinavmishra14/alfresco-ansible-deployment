@@ -4,7 +4,7 @@ if [ -n "$MOLECULE_IT_SCENARIO" ]; then
     export ANSIBLE_VAULT_PASSWORD_FILE=./.vault_pass.txt
     if [ ! -f "$ANSIBLE_VAULT_PASSWORD_FILE" ]; then
         echo "Generating a random secret to encrypt in ansible-vault"
-        openssl rand -base64 33 >$ANSIBLE_VAULT_PASSWORD_FILE
+        openssl rand -base64 33 > $ANSIBLE_VAULT_PASSWORD_FILE
     fi
 
     EXTRA_CONFIG=""
