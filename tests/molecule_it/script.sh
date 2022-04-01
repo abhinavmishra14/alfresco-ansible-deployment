@@ -19,7 +19,7 @@ if [ -n "$MOLECULE_IT_SCENARIO" ]; then
         # shellcheck disable=SC2086
         molecule $EXTRA_CONFIG converge -s "$MOLECULE_IT_SCENARIO"
 
-        SECRETS='vars/secrets.yml'
+        SECRETS='vars/secrets.yml' # pragma: allowlist secret
         if [ ! -f "$SECRETS" ]; then
             echo "$SECRETS should exists"
             exit 1
