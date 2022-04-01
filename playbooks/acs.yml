@@ -6,7 +6,7 @@
   tasks:
     - name: Ensure no secrets are still set as group_vars
       fail:
-        msg: "Secrets needs to be moved to vars/secrets.yml"
+        msg: "Secrets needs to be encrypted in vars/secrets.yml, see upgrade docs"
       when: lookup('file', base_folder + '/group_vars/all.yml').find('_db_password') != -1
     - name: Check if secrets.yml already contains secrets
       ansible.builtin.stat:

@@ -214,6 +214,9 @@ This playbook expects that security-relevant variables are configured in `vars/s
 
 Is it strongly recommended to enable [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) in order to avoid keeping secrets in plaintext on the control node file-system.
 
+If you run the playbook without configuring Ansible Vault, it will automatically
+generate those secrets but they will be saved as plaintext.
+
 #### Enable Ansible Vault support
 
 The steps required to enable **Ansible Vault** support are:
