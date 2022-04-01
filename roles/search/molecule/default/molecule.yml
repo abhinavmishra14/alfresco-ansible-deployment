@@ -19,16 +19,13 @@ platforms:
       - repository
       - nginx
       - search
+      - database
+      - syncservice
 provisioner:
-  ansible_args:
-    - -e
-    - reposearch_shared_secret=dummy
-    - --limit=search
   name: ansible
   inventory:
     links: 
       group_vars: ../../../../group_vars
-      host_vars: host_vars
 verifier:
   name: testinfra
   env:
