@@ -273,6 +273,12 @@ Variables defined in `vars/secrets.yml` can also be populated dynamically using 
 * [AWS Secrets](https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_secret_lookup.html)
 * [1Password](https://docs.ansible.com/ansible/latest/collections/community/general/onepassword_lookup.html)
 
+### Alfresco/Solr authentication
+
+Starting with ACS 7.2 and/or Search services 2.0.3, the communication between Repository and Solr requires to be authenticated. The playbook supports that authentication scheme using the new `secret` method.
+
+This authentication method requires a shared secret. In order to correctly configure it, the variable `reposearch_shared_secret` needs to be set in `vars/secrets.yml` or passed as an extra variable (it needs to be available to the localhost's hostvars array of variables).
+
 ### Alfresco Global Properties
 
 You can provide your [repository configuration](https://github.com/Alfresco/acs-deployment/blob/master/docs/properties-reference.md) by editing the `configuration_files/alfresco-global.properties` file.
