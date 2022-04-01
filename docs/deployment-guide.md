@@ -233,7 +233,7 @@ The steps to enable Ansible Vault support are:
 
 Now you are ready to start using Ansible Vault.
 
-#### Populate secrets
+#### Populate secrets with Ansible Vault
 
 Ansible Vault provides two alternative ways to protect secrets:
 
@@ -260,6 +260,14 @@ ansible-vault encrypt vars/secrets.yml
 Now mandatory secrets are ready to use by the playbook.
 
 Please refer to the [official documentation](https://docs.ansible.com/ansible/latest/user_guide/vault.html) to learn how to interact with existing encrypted variables or files.
+
+#### Populate secrets with third-party solutions
+
+Variables defined in `vars/secrets.yml` can also be populated dynamically using third-parties lookup plugins:
+
+* [HashiCorp Vault](https://docs.ansible.com/ansible/latest/collections/community/hashi_vault/hashi_vault_lookup.html)
+* [AWS Secrets](https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_secret_lookup.html)
+* [1Password](https://docs.ansible.com/ansible/latest/collections/community/general/onepassword_lookup.html)
 
 ### Alfresco Global Properties
 
