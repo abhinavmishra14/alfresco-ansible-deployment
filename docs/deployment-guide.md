@@ -212,20 +212,21 @@ If you have a valid license place your `.lic` file in the `configuration_files/l
 
 This playbook expects that security-relevant variables are configured in `vars/secrets.yml` file.
 
-Is it strongly recommended to enable [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) in order to keep those secrets in plaintext on the control node file system.
+Is it strongly recommended to enable [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) in order to avoid keeping secrets in plaintext on the control node file-system.
 
 #### Enable Ansible Vault support
 
-The steps to enable Ansible Vault support are:
+The steps required to enable **Ansible Vault** support are:
 
-* Configure a vault password in a file (e.g. ~/.vault_pass.txt)
+* Configure a vault password in a file (e.g. `~/.vault_pass.txt`)
   * Optionally you can autogenerate a strong password with:
 
     ```bash
     openssl rand -base64 21 > ~/.vault_pass.txt
     ```
 
-* Export the path to the vault password file as `ANSIBLE_VAULT_PASSWORD_FILE`:
+* Export the path to the vault password file as `ANSIBLE_VAULT_PASSWORD_FILE` so
+  that can automatically picked-up when running Ansile:
 
   ```bash
   export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass.txt
@@ -240,17 +241,17 @@ Ansible Vault provides two alternative ways to protect secrets:
 * [Encrypted variables](https://docs.ansible.com/ansible/latest/user_guide/vault.html#encrypting-individual-variables-with-ansible-vault)
 * [Encrypted files](https://docs.ansible.com/ansible/latest/user_guide/vault.html#encrypting-files-with-ansible-vault)
 
-At the previous links you can read advantages and disadvantages of both.
+In the previous links you can read both advantages and disadvantages of the two approaches.
 
-We provide a script to automatically autogenerate secure secrets that is useful for both alternatives (`openssl` is required).
+We provide a script to automatically autogenerate secure secrets (`openssl` is required).
 
-If you prefer **Encrypted variables**:
+If you prefer **Encrypted variables** run:
 
 ```bash
 ./scripts/generate-secrets.sh > vars/secrets.yml
 ```
 
-or if you prefer **Encrypted files**,
+or if you prefer **Encrypted files** run:
 
 ```bash
 ./scripts/generate-secrets.sh plaintext > vars/secrets.yml
