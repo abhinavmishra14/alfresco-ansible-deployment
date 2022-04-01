@@ -208,20 +208,58 @@ If you have a valid license place your `.lic` file in the `configuration_files/l
 
 > NOTE: You can also [upload a license](https://docs.alfresco.com/content-services/latest/admin/license/) via the Admin Console once the system is running.
 
-### Alfresco/Solr authentication
+### Secrets management
 
-As of ACS 7.2 and/or Search services 2.0.3, the repository <--> solr communication requires to be authenticated. The playbook will set up that authentication scheme using the new `secret` method.
-This methods needs to be passed a shared secret. In order to do so use the variable below:
+This playbook expects that security-relevant variables are configured in `vars/secrets.yml` file.
 
-```yaml
-reposearch_shared_secret: dummy
+Is it strongly recommended to enable [Ansible Vault](https://docs.ansible.com/ansible/latest/user_guide/vault.html) in order to keep those secrets in plaintext on the control node file system.
+
+#### Enable Ansible Vault support
+
+The steps to enable Ansible Vault support are:
+
+* Configure a vault password in a file (e.g. ~/.vault_pass.txt)
+  * Optionally you can autogenerate a strong password with:
+
+    ```bash
+    openssl rand -base64 21 > ~/.vault_pass.txt
+    ```
+
+* Export the path to the vault password file as `ANSIBLE_VAULT_PASSWORD_FILE`:
+
+  ```bash
+  export ANSIBLE_VAULT_PASSWORD_FILE=~/.vault_pass.txt
+  ```
+
+Now you are ready to start using Ansible Vault.
+
+#### Populate secrets
+
+Ansible Vault provides two alternative ways to protect secrets:
+
+* [Encrypted variables](https://docs.ansible.com/ansible/latest/user_guide/vault.html#encrypting-individual-variables-with-ansible-vault)
+* [Encrypted files](https://docs.ansible.com/ansible/latest/user_guide/vault.html#encrypting-files-with-ansible-vault)
+
+At the previous links you can read advantages and disadvantages of both.
+
+We provide a script to automatically autogenerate secure secrets that is useful for both alternatives (`openssl` is required).
+
+If you prefer **Encrypted variables**:
+
+```bash
+./scripts/generate-secrets.sh > vars/secrets.yml
 ```
 
-> Of course do not use dummy as shown above, but use a stronger secret
+or if you prefer **Encrypted files**,
 
-This secret should be placed either in the inventory file under the `all` group scope, or passed as an extra variable (it needs to be available to the localhost's hostvars array of variables)
+```bash
+./scripts/generate-secrets.sh plaintext > vars/secrets.yml
+ansible-vault encrypt vars/secrets.yml
+```
 
-:warning: Should you forget to provide that shared secret, the playbook will generate a random one. While that may sound convenient keep in mind that doing so will break the idempotency of the playbook and the shared secret will be updated every time you run the playbook.
+Now mandatory secrets are ready to use by the playbook.
+
+Please refer to the [official documentation](https://docs.ansible.com/ansible/latest/user_guide/vault.html) to learn how to interact with existing encrypted variables or files.
 
 ### Alfresco Global Properties
 
