@@ -91,6 +91,17 @@
     owner: "{{ username }}"
     group: "{{ group_name }}"
 
+- name: Configure default user credentials
+  become: true
+  template:
+    src: "users.properties.j2"
+    dest: "{{ activemq_conf }}/users.properties"
+    owner: "{{ username }}"
+    group: "{{ group_name }}"
+    mode: 'u=r,g=r,u-rx'
+  notify:
+    - restart-activemq
+
 - name: Add activemq_home and host to setenv script
   become: true
   blockinfile:
@@ -118,8 +129,8 @@
 - name: Add activemq wrapper script
   become: true
   template:
-    src: "activemq.sh"
-    dest: "{{ binaries_folder }}"
+    src: "activemq.sh.j2"
+    dest: "{{ binaries_folder }}/activemq.sh"
     owner: "{{ username }}"
     group: "{{ group_name }}"
     mode: 'u=rwx,go=rx'
@@ -128,7 +139,7 @@
 
 - name: Add activemq.service
   template:
-    src: activemq.service
+    src: activemq.service.j2
     dest: /etc/systemd/system/activemq.service
     owner: "{{ username }}"
     group: "{{ group_name }}"
