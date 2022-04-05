@@ -91,17 +91,6 @@
     owner: "{{ username }}"
     group: "{{ group_name }}"
 
-- name: Configure default user credentials
-  become: true
-  template:
-    src: "users.properties.j2"
-    dest: "{{ activemq_conf }}/users.properties"
-    owner: "{{ username }}"
-    group: "{{ group_name }}"
-    mode: 'u=r,g=r,u-rx'
-  notify:
-    - restart-activemq
-
 - name: Add activemq_home and host to setenv script
   become: true
   blockinfile:
